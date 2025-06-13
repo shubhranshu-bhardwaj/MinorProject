@@ -1,27 +1,35 @@
 .job-card {
-    position: relative;
-  border: 1px solid #ccc;
+  background: var(--card-bg);
   padding: 1rem;
+  margin: 1rem 0;
   border-radius: 8px;
-  margin-bottom: 1rem;
-  background-color: var(--card-bg);
-  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  color: var(--text);
 }
 
-.job-card h2 {
-  margin-bottom: 0.5rem;
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.job-card .company {
+.company {
+  font-size: 0.9rem;
+  color: var(--subtext);
+}
+
+.posted {
   font-weight: bold;
 }
 
-.job-card .location {
+.tech-stack {
   font-style: italic;
-  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
 }
 
-.job-card .link {
-  color: blue;
-  text-decoration: underline;
+.employment-type {
+  margin-top: 0.5rem;
+  font-weight: 600;
 }
