@@ -6,7 +6,7 @@ import "./Home.css";
 import logo from "./logo.png";
 
 const Home = () => {
-  const { jobs, loading, filterJobs } = useJob();
+  const { jobs, loading, filterJobs, nextPage, prevPage, page, totalPages } = useJob();
 
   if (loading) return <p>Loading jobs...</p>;
 
@@ -19,9 +19,15 @@ const Home = () => {
       </div>
 
       <div className="home">
-        {jobs.map((job, index) => (
-          <JobCard key={index} job={job} />
+        {jobs.map(job => (
+          <JobCard key={job.id} job={job} />
         ))}
+      </div>
+
+      <div className="pagination">
+        <button disabled={page === 1} onClick={prevPage}>Previous</button>
+        <span>Page {page} of {totalPages}</span>
+        <button disabled={page === totalPages} onClick={nextPage}>Next</button>
       </div>
     </>
   );
