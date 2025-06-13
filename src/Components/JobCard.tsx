@@ -1,17 +1,20 @@
-import './JobCard.css'
-import {type Job} from '../Hook/useJob'
+import './JobCard.css';
+import { type Job } from '../Hook/useJob';
 
-const JobCard = ({job}:{job:Job}) => 
-   (
-    <div className="job-card">
+const JobCard = ({ job }: { job: Job }) => (
+  <div className="job-card">
+    <div className="job-header">
+      <div>
         <h2>{job.title}</h2>
-
         <p className="company">{job.company_name}</p>
-
-        <p className="location">{job.location} - Remote: {job.remote ? 'Yes' : 'No'}</p>
-
-        <a href={job.url} target='_blank' rel='noreferrer' className='link'>View Job</a>
+      </div>
+      <div className="job-meta">
+        <p className="posted">{job.posted}</p>
+        <p className="tech-stack">{job.languages.join(', ')}</p>
+      </div>
     </div>
-  );
+    <p className="employment-type">{job.employment_type}</p>
+  </div>
+);
 
-export default JobCard
+export default JobCard;
