@@ -1,0 +1,27 @@
+.job-card {
+    position: relative;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.job-card h2 {
+  margin-bottom: 0.5rem;
+}
+
+.job-card .company {
+  font-weight: bold;
+}
+
+.job-card .location {
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.job-card .link {
+  color: blue;
+  text-decoration: underline;
+}
