@@ -1,34 +1,24 @@
 :root {
-  --bg-light:#ffffff;
-  --bg-dark:#1e1e1e;
-  --text-light:#000000;
-  --text-dark:#ffffff;
-  --card-bg-light:#f9f9f9;
-  --card-bg-dark:#2e2e2e;
+  --bg: #ffffff;
+  --card-bg: #f9f9f9;
+  --text: #222;
+  --subtext: #666;
+  --primary: #007bff;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-body.light{
-  background-color: var(--bg-light);
-  color: var(--text-light);
+body.dark {
+  --bg: #1e1e1e;
+  --card-bg: #2e2e2e;
+  --text: #eee;
+  --subtext: #aaa;
+  --primary: #66d9ef;
+  --shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
 }
 
-body.dark{
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
-
-body.light .job-card{
-  background-color: var(--bg-light);
-  color: var(--text-light);
-}
-
-body.dark .job-card{
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
-
-body{
-  font-family: Arial, Helvetica, sans-serif;
+body {
   margin: 0;
-  transition: backgrpund-color 0.3s ease, color 0.3s ease;
+  font-family: sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
