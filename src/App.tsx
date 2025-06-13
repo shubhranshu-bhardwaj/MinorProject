@@ -1,17 +1,13 @@
-
-import './index.css'
-import { ThemeProvider } from './Context/ThemeContext'
-import Home from './Pages/Home'
+import './index.css';
+import { ThemeProvider } from './Context/ThemeContext';
+import Home from './Pages/Home';
 
 function App() {
-
   return (
-    <>
-     <ThemeProvider>
+    <ThemeProvider>
       <Home />
-     </ThemeProvider>
-    </>
-  )
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
