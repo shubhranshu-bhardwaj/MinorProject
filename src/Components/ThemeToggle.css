@@ -1,11 +1,22 @@
 .theme-toggle-container {
+  position: relative;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
-
 .tooltip {
-  font-size: 0.75rem;
-  color: var(--subtext);
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.theme-toggle-container:hover .tooltip {
+  opacity: 1;
 }
