@@ -1,35 +1,18 @@
 .job-card {
-  background: var(--card-bg);
-  padding: 1rem;
-  margin: 1rem 0;
+  background: white;
+  padding: 20px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow);
-  color: var(--text);
+  justify-content: space-between;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
-.job-header {
+.card-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
-
-.company {
-  font-size: 0.9rem;
-  color: var(--subtext);
-}
-
-.posted {
-  font-weight: bold;
-}
-
-.tech-stack {
-  font-style: italic;
-  font-size: 0.85rem;
-}
-
-.employment-type {
-  margin-top: 0.5rem;
-  font-weight: 600;
-}
+.company { margin: 4px 0; color: #555; }
+.meta span { margin-right: 12px; color: #777; font-size: 14px; }
+.posted { color: #999; font-size: 14px; }
+.skills, .employment { color: #333; font-size: 15px; }
