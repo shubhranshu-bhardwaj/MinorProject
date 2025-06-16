@@ -1,19 +1,22 @@
 import './JobCard.css';
-import { type Job } from '../Hook/useJob';
+import { FaMapMarkerAlt, FaUserTie } from 'react-icons/fa';
+import type { Job } from '../Hook/useJobs';
 
 const JobCard = ({ job }: { job: Job }) => (
   <div className="job-card">
-    <div className="job-header">
+    <div className="card-header">
       <div>
-        <h2>{job.title}</h2>
+        <h3>{job.title}</h3>
         <p className="company">{job.company_name}</p>
+        <div className="meta">
+          <span><FaUserTie /> {job.experience} yrs</span>
+          <span><FaMapMarkerAlt /> {job.location}</span>
+        </div>
       </div>
-      <div className="job-meta">
-        <p className="posted">{job.posted}</p>
-        <p className="tech-stack">{job.languages.join(', ')}</p>
-      </div>
+      <div className="posted">{job.posted}</div>
     </div>
-    <p className="employment-type">{job.employment_type}</p>
+    <p className="skills">Skills: {job.languages.join(', ')}</p>
+    <p className="employment">{job.employment_type}</p>
   </div>
 );
 
