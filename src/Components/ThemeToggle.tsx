@@ -8,12 +8,11 @@ const ThemeToggle = () => {
 
   return (
     <div className="theme-toggle-container" onClick={toggleTheme}>
-      {isLight ? <FaMoon size={24} /> : <FaSun size={24} />}
+      {isLight ? <FaMoon size={24}/> : <FaSun size={24} color="#ffe066" />}
       <span className="tooltip">
         Switch to {isLight ? 'dark' : 'light'} mode
       </span>
     </div>
   );
-};
-
-export default ThemeToggle;
+}
+export default ThemeToggle
