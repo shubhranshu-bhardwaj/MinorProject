@@ -549,3 +549,167 @@ ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Shared ->
 	2.4. Add logging in each layer starting from (web and service and 		repository layer).
 	2.5. Product  entity ->create( functionality into this solution) 
 	Then create Repository product.json file 
+
+Till now I have made changes in:
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Entities - > EmployeeEntity.cs
+namespace Microsoft.ILP2025.EmployeeCRUD.Entities
+{
+    public class EmployeeEntity
+    {
+        public int Id { get; set; }
+
+        public string Email { get; set; }
+
+        public string Name { get; set; }
+
+        public string Departmet { get; set; }
+
+        public string Designation { get; set; }
+
+        public DateTime DateOfJoing { get; set; }
+    }
+}
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Repositores - > EmployeeRepository.cs
+
+// using Microsoft.ILP2025.EmployeeCRUD.Entities;
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+// using System.Text;
+// using System.Threading.Tasks;
+
+// namespace Microsoft.ILP2025.EmployeeCRUD.Repositores
+// {
+//     public class EmployeeRepository : IEmployeeRepository
+//     {
+//         public async Task<List<EmployeeEntity>> GetAllEmployees()
+//         {
+//             return await Task.FromResult(this.GetEmployees());
+//         }
+
+//         public async Task<EmployeeEntity> GetEmployee(int id)
+//         {
+//             var employees = this.GetEmployees();
+
+//             return await Task.FromResult(employees.FirstOrDefault(e => e.Id == id));
+//         }
+
+//         private List<EmployeeEntity> GetEmployees()
+//         {
+//             var employees = new List<EmployeeEntity>();
+
+//             employees.Add(new EmployeeEntity { Id = 1, Name = "Pradip" });
+//             employees.Add(new EmployeeEntity { Id = 2, Name = "Shrikanth" });
+
+//             return employees;
+//         }
+//     }
+// }
+
+
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Repositores
+{
+    public class EmployeeRepository : IEmployeeRepository
+    {
+        // In-memory list acting as a mock database
+        private static List<EmployeeEntity> employees = new List<EmployeeEntity>
+        {
+            new EmployeeEntity {
+                Id = 1,
+                Name = "Shubh",
+                Email = "shubh@example.com",
+                Departmet = "IT",
+                Designation = "Developer",
+                DateOfJoing = new DateTime(2023, 5, 8)
+                },
+            new EmployeeEntity {
+                Id = 2,
+                Name = "Adarsh",
+                Email = "adarsh@example.com",
+                Departmet = "HR",
+                Designation = "Manager",
+                DateOfJoing = new DateTime(2023, 5, 8)
+                }
+        };
+
+        // Get all employees
+        public async Task<List<EmployeeEntity>> GetAllEmployees()
+        {
+            return await Task.FromResult(employees);
+        }
+
+        // Get employee by ID
+        public async Task<EmployeeEntity> GetEmployee(int id)
+        {
+            var employee = employees.FirstOrDefault(e => e.Id == id);
+            return await Task.FromResult(employee);
+        }
+
+        // Create new employee
+        public async Task CreateEmployee(EmployeeEntity employee)
+        {
+            // Generate new ID
+            int newId = employees.Any() ? employees.Max(e => e.Id) + 1 : 1;
+            employee.Id = newId;
+            employees.Add(employee);
+            await Task.CompletedTask; // async compliance
+        }
+
+        // Update existing employee
+        public async Task UpdateEmployee(EmployeeEntity updatedEmployee)
+        {
+            var existingEmployee = employees.FirstOrDefault(e => e.Id == updatedEmployee.Id);
+            if (existingEmployee != null)
+            {
+                existingEmployee.Name = updatedEmployee.Name;
+                // Add more fields as needed
+            }
+
+            await Task.CompletedTask;
+        }
+
+        // Delete employee by ID
+        public async Task DeleteEmployee(int id)
+        {
+            var employeeToDelete = employees.FirstOrDefault(e => e.Id == id);
+            if (employeeToDelete != null)
+            {
+                employees.Remove(employeeToDelete);
+            }
+
+            await Task.CompletedTask;
+        }
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Repositores - > IEmployeeRepository.cs
+
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Repositores
+{
+    public interface IEmployeeRepository
+    {
+        Task<EmployeeEntity> GetEmployee(int id);
+
+        Task<List<EmployeeEntity>> GetAllEmployees();
+
+        Task CreateEmployee(EmployeeEntity employee);
+        Task UpdateEmployee(EmployeeEntity employee);
+        Task DeleteEmployee(int id);
+    }
+}
+
