@@ -1,0 +1,551 @@
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Entities - > EmployeeEntity.cs
+namespace Microsoft.ILP2025.EmployeeCRUD.Entities
+{
+    public class EmployeeEntity
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }        
+    }
+} 
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Entities -> Microsoft.ILP2025.EmployeeCRUD.Entities.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Repositores - > EmployeeRepository.cs
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Repositores
+{
+    public class EmployeeRepository : IEmployeeRepository
+    {
+        public async Task<List<EmployeeEntity>> GetAllEmployees()
+        {
+            return await Task.FromResult(this.GetEmployees());
+        }
+
+        public async Task<EmployeeEntity> GetEmployee(int id)
+        {
+            var employees = this.GetEmployees();
+
+            return await Task.FromResult(employees.FirstOrDefault(e => e.Id == id));
+        }
+
+        private List<EmployeeEntity> GetEmployees()
+        {
+            var employees = new List<EmployeeEntity>();
+
+            employees.Add(new EmployeeEntity { Id = 1, Name = "Pradip" });
+            employees.Add(new EmployeeEntity { Id = 2, Name = "Shrikanth" });
+
+            return employees;
+        }
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Repositores - > IEmployeeRepository.cs
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Repositores
+{
+    public interface IEmployeeRepository
+    {
+        Task<EmployeeEntity> GetEmployee(int id);
+
+        Task<List<EmployeeEntity>> GetAllEmployees();
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Repositores - > Microsoft.ILP2025.EmployeeCRUD.Repositores.csproj
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Entities\Microsoft.ILP2025.EmployeeCRUD.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Servcies -> EmployeeServcie.cs
+
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using Microsoft.ILP2025.EmployeeCRUD.Repositores;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Servcies
+{
+    public class EmployeeServcie : IEmployeeService
+    {
+        public IEmployeeRepository employeeRepository { get; set; }
+
+        public EmployeeServcie(IEmployeeRepository employeeRepository)
+        {
+            this.employeeRepository = employeeRepository;
+        }
+
+        public async Task<List<EmployeeEntity>> GetAllEmployees()
+        {
+            return await employeeRepository.GetAllEmployees();
+        }
+
+        public async Task<EmployeeEntity> GetEmployee(int id)
+        {
+            return await employeeRepository.GetEmployee(id);
+        }
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Servcies -> IEmployeeServcie.cs
+
+using Microsoft.ILP2025.EmployeeCRUD.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Servcies
+{
+    public interface IEmployeeService
+    {
+        Task<EmployeeEntity> GetEmployee(int id);
+
+        Task<List<EmployeeEntity>> GetAllEmployees();
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Servcies -> Microsoft.ILP2025.EmployeeCRUD.Servcies.csproj
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Entities\Microsoft.ILP2025.EmployeeCRUD.Entities.csproj" />
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Repositores\Microsoft.ILP2025.EmployeeCRUD.Repositores.csproj" />
+  </ItemGroup>
+
+</Project>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> appsettings.Development.json
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> appsettings.json
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Microsoft.ILP2025.EmployeeCRUD.Web.csproj
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Entities\Microsoft.ILP2025.EmployeeCRUD.Entities.csproj" />
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Repositores\Microsoft.ILP2025.EmployeeCRUD.Repositores.csproj" />
+    <ProjectReference Include="..\Microsoft.ILP2025.EmployeeCRUD.Servcies\Microsoft.ILP2025.EmployeeCRUD.Servcies.csproj" />
+  </ItemGroup>
+
+</Project>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Program.cs
+
+using Microsoft.ILP2025.EmployeeCRUD.Repositores;
+using Microsoft.ILP2025.EmployeeCRUD.Servcies;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Web
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            //Inject dependencies 
+            builder.Services.AddScoped<IEmployeeService, EmployeeServcie>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapStaticAssets();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Employee}/{action=Index}/{id?}")
+                .WithStaticAssets();
+
+            app.Run();
+        }
+    }
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Controllers -> EmployeeController.cs
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.ILP2025.EmployeeCRUD.Repositores;
+using Microsoft.ILP2025.EmployeeCRUD.Servcies;
+
+namespace Microsoft.ILP2025.EmployeeCRUD.Web.Controllers
+{
+    public class EmployeeController : Controller
+    {
+        public IEmployeeService employeeService { get; set; }
+
+        public EmployeeController(IEmployeeService employeeService)
+        {
+            this.employeeService = employeeService;
+        }
+
+        // GET: EmployeeController
+        public async Task<ActionResult> Index()
+        {
+            var employees = await this.employeeService.GetAllEmployees();
+            return View(employees);
+        }
+
+        // GET: EmployeeController/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            var employee = await this.employeeService.GetEmployee(id);
+            return View(employee);
+        }      
+    }
+}
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Model -> ErrorViewModel.cs
+namespace Microsoft.ILP2025.EmployeeCRUD.Web.Models
+{
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+}
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Properties -> launchSettings.json
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5139",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7053;http://localhost:5139",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> _ViewImports.cshtml
+@using Microsoft.ILP2025.EmployeeCRUD.Web
+@using Microsoft.ILP2025.EmployeeCRUD.Web.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> _ViewStart.cshtml
+@{
+    Layout = "_Layout";
+}
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Employee -> Details.cshtml
+@model Microsoft.ILP2025.EmployeeCRUD.Entities.EmployeeEntity
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h1>Employee Details</h1>
+
+<div>
+    <h4>Employee - Entity</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Employee -> Index.cshtml
+@model IEnumerable<Microsoft.ILP2025.EmployeeCRUD.Entities.EmployeeEntity>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+<h1>Employees</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>            
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Shared -> _Layout.cshtml
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Microsoft.ILP2025.EmployeeCRUD.Web</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Microsoft.ILP2025.EmployeeCRUD.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Microsoft.ILP2025.EmployeeCRUD.Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - Microsoft.ILP2025.EmployeeCRUD.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Shared -> _Layout.cshtml.css
+
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #0077cc;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Shared -> _ValidationScriptsPartial.cshtml
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+ILPEmployeeCRUD-main -> Microsoft.ILP2025.EmployeeCRUD.Web -> Views -> Shared -> Error.cshtml
+
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Development Mode</h3>
+<p>
+    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+</p>
+<p>
+    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
+    It can result in displaying sensitive information from exceptions to end users.
+    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
+    and restarting the app.
+</p>
+
+1. What all these, and for that what I should learn or know?
+2. I need to perform all these task in this
+	2.1. Implement Create, update, edit , delete operations
+	2.2. Save data Into file storage - employee.txt or employee.json
+	2.3. Add 4-5 more properties in employee entity 
+	2.4. Add logging in each layer starting from (web and service and 		repository layer).
+	2.5. Product  entity ->create( functionality into this solution) 
+	Then create Repository product.json file 
